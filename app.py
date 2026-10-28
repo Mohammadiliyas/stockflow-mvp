@@ -10,7 +10,7 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-change-this-se
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
-db_url = os.environ.get("DATABASE_URL", "sqlite:///stockflow.db")
+db_url = os.environ.get("DATABASE_URL") or "sqlite:///stockflow.db"
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql+psycopg://", 1)
 elif db_url.startswith("postgresql://"):
