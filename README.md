@@ -30,9 +30,9 @@ python app.py
 Open http://127.0.0.1:5000 and create an account. The SQLite database is created automatically.
 
 ## Deployment and storage
-The included `render.yaml` Blueprint defines a web service and PostgreSQL database, and wires the database connection into `DATABASE_URL`. Apply the Blueprint from Render to use PostgreSQL-backed storage.
+The live demo is hosted on Render and has been verified to connect to PostgreSQL through the `DATABASE_URL` environment variable. Keep the database URL and `SECRET_KEY` configured in Render Environment settings; never commit their values to Git.
 
-The currently running web service was created directly, outside the Blueprint flow. It therefore uses the SQLite fallback until its `DATABASE_URL` is connected to the Render PostgreSQL instance. **SQLite data on a free hosted instance may be lost after a restart or redeploy; do not use this direct instance for durable data until PostgreSQL is connected.**
+The app supports SQLite as a local-development fallback when `DATABASE_URL` is not set. On a hosted deployment, configure PostgreSQL explicitly and verify the live connection before relying on persistent data. The included `render.yaml` is a sample Blueprint; review its database name and service settings before applying it to an existing Render workspace to avoid creating duplicate resources.
 
 ## Data model
 - `Organization`: name and default low-stock threshold
