@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: stockflow-mvp
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
+    healthCheckPath: /healthz
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: stockflow-db
+          property: connectionString
+
+databases:
+  - name: stockflow-db
+    databaseName: stockflow
+    user: stockflow
+    plan: free
