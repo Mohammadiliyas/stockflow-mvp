@@ -63,6 +63,11 @@ def current_user():
     uid = session.get("user_id")
     return db.session.get(User, uid) if uid else None
 
+@app.context_processor
+def inject_current_user():
+    return {"current_user": current_user}
+
+
 
 def login_required(fn):
     @wraps(fn)
