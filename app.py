@@ -88,19 +88,6 @@ def healthz():
     return jsonify(status="ok"), 200
 
 
-@app.route("/healthz/db")
-def database_healthz():
-    """Read-only database connectivity check; never returns credentials or data."""
-    dialect = db.engine.dialect.name
-    try:
-        db.session.execute(db.text("SELECT 1"))
-        return jsonify(status="ok", database=dialect, connection="ok"), 200
-    except Exception:
-        db.session.rollback()
-        app.logger.warning("Database connectivity check failed")
-        return jsonify(status="error", database=dialect, connection="failed"), 503
-
-
 @app.route("/")
 def index():
     return redirect(url_for("dashboard") if current_user() else url_for("login"))
